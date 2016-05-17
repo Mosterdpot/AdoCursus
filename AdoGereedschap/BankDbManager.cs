@@ -7,17 +7,20 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Data.Common;
 
+
 namespace AdoGereedschap
 {
-    public class Bank2DbManager
+    public class BankDbManager
     {
-        private static ConnectionStringSettings conBankSetting = ConfigurationManager.ConnectionStrings["Bank2"];
+        private static ConnectionStringSettings conBankSetting = ConfigurationManager.ConnectionStrings["Bank"];
         private static DbProviderFactory factory = DbProviderFactories.GetFactory(conBankSetting.ProviderName);
+
         public DbConnection GetConnection()
         {
             var conBank = factory.CreateConnection();
             conBank.ConnectionString = conBankSetting.ConnectionString;
             return conBank;
         }
+
     }
 }

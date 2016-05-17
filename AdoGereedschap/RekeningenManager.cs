@@ -1,5 +1,4 @@
-﻿using AdoGereedschap;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 
-namespace AdoGereedschap
+namespace AdoGereedschap  
 {
     public class RekeningenManager
     {
@@ -81,10 +80,8 @@ namespace AdoGereedschap
             var dbManager = new BankDbManager();
             var dbManager2 = new Bank2DbManager();
             var opties = new TransactionOptions();
-            opties.IsolationLevel =
-            System.Transactions.IsolationLevel.ReadCommitted;
-            using (var traOverschrijven
-            = new TransactionScope(TransactionScopeOption.Required, opties))
+            opties.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
+            using (var traOverschrijven = new TransactionScope(TransactionScopeOption.Required, opties))
             {
                 using (var conBank = dbManager.GetConnection())
                 {

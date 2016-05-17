@@ -22,31 +22,7 @@ namespace AdoGereedschap
         }
     }
 
-    public class BankDbManager
-    {
-        private static ConnectionStringSettings conBankSetting = ConfigurationManager.ConnectionStrings["Bank"];
-        private static DbProviderFactory factory = DbProviderFactories.GetFactory(conBankSetting.ProviderName);
+    
 
-        public DbConnection GetConnection()
-        {
-            var conBank = factory.CreateConnection();
-            conBank.ConnectionString = conBankSetting.ConnectionString;
-            return conBank;
-        }
-
-    }
-
-    public class TuinDbManager
-    {
-        private static ConnectionStringSettings conTuinSetting = ConfigurationManager.ConnectionStrings["Tuin"];
-        private static DbProviderFactory factory = DbProviderFactories.GetFactory(conTuinSetting.ProviderName);
-
-        public DbConnection GetConnection()
-        {
-            var conTuin = factory.CreateConnection();
-            conTuin.ConnectionString = conTuinSetting.ConnectionString;
-            return conTuin;
-        }
-
-    }
+    
 }
