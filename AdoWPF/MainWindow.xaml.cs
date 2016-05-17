@@ -82,7 +82,7 @@ namespace AdoWPF
                 { labelStatus.Content = ex.Message; }
             }
             else
-            { 
+            {
                 labelStatus.Content = "Tik een getal bij het storten";
             }
         }

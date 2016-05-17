@@ -11,11 +11,6 @@
                 HorizontalAlignment="left" VerticalAlignment="top"
                 Width="100" 
                 Click="buttonBonus_Click"></Button>
-
-        <Label x:Name="labelStatus" Content="Leeg maken"
-               HorizontalAlignment="Left" VerticalAlignment="Top"
-                ></Label>
-        
         <Label Content="Rekeningnr. :"></Label>
         <TextBox Name="textBoxRekeningNr" Width="100"
                  HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -27,5 +22,8 @@
         <Button Name="buttonStorten" Content="Storten" Width="100"
                 HorizontalAlignment="Left" VerticalAlignment="Top"
                  Click="buttonStorten_Click"></Button>
+        <Label x:Name="labelStatus" Content="Leeg maken"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+                ></Label>
     </StackPanel>
 </Window>
