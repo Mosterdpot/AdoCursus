@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AdoGereedschap;
 
 namespace AdoWPF
 {
@@ -22,6 +23,20 @@ namespace AdoWPF
         public SaldoRekeningRaadplegen()
         {
             InitializeComponent();
+        }
+
+        private void buttonSaldo_Click(object sender, RoutedEventArgs e)
+        {
+            var manager = new RekeningenManager();
+            try
+            {
+                labelStatus.Content =
+                manager.SaldoRekeningRaadplegen(textBoxRekeningNr.Text).ToString("N");
+            }
+            catch (Exception ex)
+            {
+                labelStatus.Content = ex.Message;
+            }
         }
     }
 }
