@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Transactions;
 
-namespace AdoGereedschap  
+namespace AdoGereedschap
 {
     public class RekeningenManager
     {
@@ -178,6 +178,33 @@ namespace AdoGereedschap
                     traOverschrijven.Commit();
                 } // using traOverschrijven
             } // using conBank
+        }
+
+        public Decimal SaldoRekeningRaadplegen(String rekeningNr)
+        {
+            var dbManager = new BankDbManager();
+            using (var conBank = dbManager.GetConnection())
+            {
+                using (var comSaldo = conBank.CreateCommand())
+                {
+                    comSaldo.CommandType = CommandType.StoredProcedure;
+                    comSaldo.CommandText = "SaldoRekeningRaadplegen";
+                    var parRekNr = comSaldo.CreateParameter();
+                    parRekNr.ParameterName = "@rekeningNr";
+                    parRekNr.Value = rekeningNr;
+                    comSaldo.Parameters.Add(parRekNr);
+                    conBank.Open();
+                    Object resultaat = comSaldo.ExecuteScalar();
+                    if (resultaat == null)
+                    {
+                        throw new Exception("Rekening bestaat niet");
+                    }
+                    else
+                    {
+                        return (Decimal)resultaat;
+                    }
+                }
+            }
         }
     }
 }
