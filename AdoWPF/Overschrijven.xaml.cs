@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AdoGereedschap;
 
 namespace AdoWPF
 {
@@ -32,7 +33,7 @@ namespace AdoWPF
                 try
                 {
                     var manager = new RekeningenManager();
-                    manager.Overschrijven(bedrag, textBoxVanRekNr.Text, textBoxNaarRekNr.Text);
+                    manager.OverschrijvenWithTransaction(bedrag, textBoxVanRekNr.Text, textBoxNaarRekNr.Text);
                     labelStatus.Content = "OK";
                 }
                 catch (Exception ex)
