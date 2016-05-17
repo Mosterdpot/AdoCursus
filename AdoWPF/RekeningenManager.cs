@@ -10,7 +10,7 @@ namespace AdoWPF
 {
     public class RekeningenManager
     {
-        public int SaldoBonus()
+        public Int32 SaldoBonus()
         {
             var dbManager = new BankDbManager();
             using (var conBank = dbManager.GetConnection())
@@ -25,7 +25,33 @@ namespace AdoWPF
             }
         }
 
-        public bool Storten(Decimal teStorten, String rekeningNr)
+        public Boolean Storten(Decimal teStorten, String rekeningNr)
+        {
+            BankDbManager dbManager = new BankDbManager();
+            using (var conBank = dbManager.GetConnection())
+            {
+                using (var comStorten = conBank.CreateCommand())
+                {
+                    comStorten.CommandText = "Storten";
+                    comStorten.CommandType = CommandType.StoredProcedure;
+
+                    DbParameter parTeStorten = comStorten.CreateParameter();
+                    parTeStorten.ParameterName = "@teStorten";
+                    parTeStorten.DbType = DbType.Currency;
+                    comStorten.Parameters.Add(parTeStorten);
+
+                    DbParameter parRekening = comStorten.CreateParameter();
+                    parRekening.ParameterName = "@rekningNr";
+                    parRekening.DbType = DbType.String;
+                    comStorten.Parameters.Add(parRekening);
+
+                    return comStorten.ExecuteNonQuery() != 0;
+                }
+            }
+            return false;
+        }
+
+        public bool Storten2(Decimal teStorten, String rekeningNr)
         {
             var dbManager = new BankDbManager();
             using (var conBank = dbManager.GetConnection())
