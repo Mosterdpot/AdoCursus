@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoWPF", "AdoWPF\AdoWPF.csproj", "{17609F23-183B-48B9-A167-80603A464BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoGereedschap", "AdoGeleebschap\AdoGereedschap.csproj", "{D7FA0636-A61F-4C2C-B144-66E4723AAE80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoGereedschap", "AdoGereedschap\AdoGereedschap.csproj", "{D7FA0636-A61F-4C2C-B144-66E4723AAE80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

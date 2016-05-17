@@ -12,6 +12,7 @@
                 Width="100" 
                 Click="buttonBonus_Click"></Button>
         <Label Content="Rekeningnr. :"></Label>
+        
         <TextBox Name="textBoxRekeningNr" Width="100"
                  HorizontalAlignment="Left" VerticalAlignment="Top"
                  ></TextBox>

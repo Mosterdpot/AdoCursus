@@ -111,7 +111,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdoGeleebschap\AdoGereedschap.csproj">
+    <ProjectReference Include="..\AdoGereedschap\AdoGereedschap.csproj">
       <Project>{d7fa0636-a61f-4c2c-b144-66e4723aae80}</Project>
       <Name>AdoGereedschap</Name>
     </ProjectReference>
