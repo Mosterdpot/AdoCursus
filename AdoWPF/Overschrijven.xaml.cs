@@ -33,7 +33,7 @@ namespace AdoWPF
                 try
                 {
                     var manager = new RekeningenManager();
-                    manager.OverschrijvenWithTransaction(bedrag, textBoxVanRekNr.Text, textBoxNaarRekNr.Text);
+                    manager.Overschrijven(bedrag, textBoxVanRekNr.Text, textBoxNaarRekNr.Text);
                     labelStatus.Content = "OK";
                 }
                 catch (Exception ex)
