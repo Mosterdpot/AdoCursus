@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AdoGereedschap;
+using System.Globalization;
 
 namespace AdoWPF
 {
@@ -32,13 +33,15 @@ namespace AdoWPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             VulDeGrid();
-            System.Windows.Data.CollectionViewSource brouwerViewSource1 = ((System.Windows.Data.CollectionViewSource)(this.FindResource("brouwerViewSource1")));
+            System.Windows.Data.CollectionViewSource brouwerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("brouwerViewSource1")));
             // Load data by setting the CollectionViewSource.Source property:
             // brouwerViewSource1.Source = [generic data source]
         }
 
         private void buttonZoeken_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckOpFouten()) e.Handled = true;
+
             VulDeGrid();
         }
 
@@ -63,21 +66,29 @@ namespace AdoWPF
 
         private void goToFirstButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckOpFouten()) e.Handled = true;
+
             brouwerViewSource.View.MoveCurrentToFirst();
             goUpdate();
         }
         private void goToPreviousButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckOpFouten()) e.Handled = true;
+
             brouwerViewSource.View.MoveCurrentToPrevious();
             goUpdate();
         }
         private void goToNextButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckOpFouten()) e.Handled = true;
+
             brouwerViewSource.View.MoveCurrentToNext();
             goUpdate();
         }
         private void goToLastButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckOpFouten()) e.Handled = true;
+
             brouwerViewSource.View.MoveCurrentToLast();
             goUpdate();
         }
@@ -98,11 +109,13 @@ namespace AdoWPF
                 }
             } textBoxGo.Text = (brouwerViewSource.View.CurrentPosition + 1).ToString();
 
-            
+
         }
 
         private void goButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckOpFouten()) e.Handled = true;
+
             int position;
             int.TryParse(textBoxGo.Text, out position);
             if (position > 0 && position <= brouwerDataGrid.Items.Count)
@@ -121,6 +134,33 @@ namespace AdoWPF
             goUpdate();
         }
 
+        private void brouwerDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (CheckOpFouten()) e.Handled = true;
+        }
+        private void brouwerDataGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (CheckOpFouten()) e.Handled = true;
+        }
 
+        private bool CheckOpFouten()
+        {
+            bool foutGevonden = false;
+            foreach (var c in gridDetail.Children)
+            {
+                if (c is AdornerDecorator)
+                {
+                    if (Validation.GetHasError(((AdornerDecorator)c).Child))
+                    {
+                        foutGevonden = true;
+                    }
+                }
+                else if (Validation.GetHasError((DependencyObject)c))
+                {
+                    foutGevonden = true;
+                }
+            }
+            return foutGevonden;
+        }
     }
 }

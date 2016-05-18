@@ -9,6 +9,31 @@ namespace AdoGereedschap
 {
     public class BrouwerManager
     {
+
+        public List<String> GetPostCodes()
+        {
+            List<string> postnummers = new List<string>();
+            var manager = new BierenDbManager();
+            using (var conBrouwer = manager.GetConnection())
+            {
+                using (var comPostCodes = conBrouwer.CreateCommand())
+                {
+                    comPostCodes.CommandType = CommandType.StoredProcedure;
+                    comPostCodes.CommandText = "PostCodes";
+                    conBrouwer.Open();
+                    using (var rdrPostCodes = comPostCodes.ExecuteReader())
+                    {
+                        Int32 postcodePos = rdrPostCodes.GetOrdinal("PostCode");
+                        while (rdrPostCodes.Read())
+                        {
+                            postnummers.Add(rdrPostCodes.GetInt16(postcodePos).ToString());
+                        }
+                    } // using rdrPostCodes
+                } // comPostCodes
+            } // conBrouwer
+            return postnummers;
+        }
+
         public List<Brouwer> GetBrouwersBeginNaam(String beginNaam)
         {
             List<Brouwer> brouwers = new List<Brouwer>();
@@ -26,7 +51,7 @@ namespace AdoGereedschap
                         parZoals.Value = beginNaam + "%";
                         comBrouwers.Parameters.Add(parZoals);
                     }
-                    else 
+                    else
                         comBrouwers.CommandText = "select * from Brouwers";
 
                     conBieren.Open();
@@ -42,8 +67,9 @@ namespace AdoGereedschap
                         while (rdrBrouwers.Read())
                         {
                             if (rdrBrouwers.IsDBNull(omzetPos))
-                            { 
-                                omzet = null; }
+                            {
+                                omzet = null;
+                            }
                             else
                             {
                                 omzet = rdrBrouwers.GetInt32(omzetPos);

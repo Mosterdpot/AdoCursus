@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IngevuldGroterDanNul.cs" />
     <Compile Include="KlantToevoegen.xaml.cs">
       <DependentUpon>KlantToevoegen.xaml</DependentUpon>
     </Compile>
@@ -79,6 +80,7 @@
       <DependentUpon>OverzichtBrouwers.xaml</DependentUpon>
     </Compile>
     <Compile Include="PostcodeRangeRule.cs" />
+    <Compile Include="PostcodeRangeRule2.cs" />
     <Compile Include="RekeningInfoRaadplegen.xaml.cs">
       <DependentUpon>RekeningInfoRaadplegen.xaml</DependentUpon>
     </Compile>

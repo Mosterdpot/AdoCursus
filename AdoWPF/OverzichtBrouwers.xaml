@@ -3,14 +3,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
     xmlns:AdoGereedschap="clr-namespace:AdoGereedschap;assembly=AdoGereedschap"
-    xmlns:AdoGereedschap1="clr-namespace:AdoGereedschap;assembly=AdoGemeenschap"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d" x:Class="AdoWPF.OverzichtBrouwers"
     xmlns:local="clr-namespace:AdoWPF"
-    Title="OverzichtBrouwers2" SizeToContent="Width" Loaded="Window_Loaded" Height="603">
+    Title="OverzichtBrouwers2" SizeToContent="Width" Loaded="Window_Loaded" Height="603" Width="618">
     <Window.Resources>
         <CollectionViewSource x:Key="brouwerViewSource" d:DesignSource="{d:DesignInstance {x:Type AdoGereedschap:Brouwer}, CreateList=True}"/>
-        <CollectionViewSource x:Key="brouwerViewSource1" d:DesignSource="{d:DesignInstance {x:Type AdoGereedschap1:Brouwer}, CreateList=True}"/>
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="Background" Value="Yellow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
@@ -38,7 +53,8 @@
                 <Button Content="Zoeken" HorizontalAlignment="Left" x:Name="buttonZoeken" Width="Auto"
 					Background="BlanchedAlmond" FontWeight="Bold" Click="buttonZoeken_Click"
 					IsDefault="True"/>
-
+                <Label Content="Postcode filter:"></Label>
+                <ComboBox Name="comboBoxPostCode"></ComboBox>
             </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >
@@ -59,7 +75,7 @@
                     <Label Content="{Binding Path=BrouwerNr}" Grid.Column="1" Grid.Row="0" Height="28" 
                            HorizontalAlignment="Left" Margin="3" Name="brouwerNrLabel" VerticalAlignment="Center" />
                     <Label Content="Br Naam:" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="3" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3"
+                    <TextBox Grid.Column="3" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3"                             
                              Name="brNaamTextBox" Text="{Binding Path=BrNaam, Mode=TwoWay, ValidatesOnExceptions=true,
                         NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
                     <Label Content="Adres:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
@@ -67,20 +83,62 @@
                              Name="adresTextBox" Text="{Binding Path=Adres, Mode=TwoWay, ValidatesOnExceptions=true, 
                         NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
                     <Label Content="Postcode:" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="3" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3"
-                             Name="postcodeTextBox" Text="{Binding Path=Postcode, Mode=TwoWay,
-                        ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"
-                             Width="120" />
+                    <AdornerDecorator Grid.Column="3" Grid.Row="1">
+                        <TextBox Grid.Column="3" Grid.Row="1" Height="23" Validation.ErrorTemplate="{StaticResource validationTemplate}" 
+                            Style="{StaticResource textBoxInError}" HorizontalAlignment="Left" Margin="3" Name="postcodeTextBox" VerticalAlignment="Center" Width="120">
+                            <TextBox.Text>
+                                <Binding Path="Postcode" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="true" NotifyOnValidationError="true">
+                                    <Binding.ValidationRules>
+                                        <local:PostcodeRangeRule2/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </AdornerDecorator>
                     <Label Content="Gemeente:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" 
                              Name="gemeenteTextBox" Text="{Binding Path=Gemeente, Mode=TwoWay,
                         ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"
                              Width="120" />
-                    <Label Content="Omzet:" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3"
-                             Name="omzetTextBox" Text="{Binding Path=Omzet, Mode=TwoWay,
-                        ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" 
-                             Width="120" />
+                    <Label Content="Omzet:" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />                    
+                    <TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
+                        VerticalAlignment="Center" Width="120"
+                        Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                        Style="{StaticResource textBoxInError}">
+                        <TextBox.Text>
+                            <Binding Path="Omzet"
+                                ValidatesOnDataErrors="True"
+                                UpdateSourceTrigger="PropertyChanged"
+                                ValidatesOnNotifyDataErrors="True"
+                                Mode="TwoWay"                                                                
+                                StringFormat="c"
+                                TargetNullValue="{x:Static sys:String.Empty}">
+                                <Binding.ValidationRules>
+                                    <local:IngevuldGroterDanNul/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <!--<TextBox Grid.Column="3" Grid.Row="2" Height="23"
+                            HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
+                            VerticalAlignment="Center" Width="120"
+                            Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                            Style="{StaticResource textBoxInError}">
+                                                    <TextBox.Text>
+                                                        <Binding Path="Omzet"
+                            ValidatesOnDataErrors="True"
+                            UpdateSourceTrigger="PropertyChanged"
+                            ValidatesOnNotifyDataErrors="True"
+                            Mode="TwoWay"
+                            ConverterCulture="{x:Static glob:CultureInfo.CurrentCulture}"
+                            StringFormat="c"
+                            TargetNullValue="{x:Static sys:String.Empty}">
+                                <Binding.ValidationRules>
+                                    <local:IngevuldGroterDanNul/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>-->
                 </Grid>
             </StackPanel>
         </Border>
@@ -95,6 +153,8 @@
         <Border DataContext="{StaticResource brouwerViewSource}" Background="SkyBlue"
 			BorderBrush="Black" BorderThickness="1">
             <DataGrid x:Name="brouwerDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"
+                PreviewMouseDown="brouwerDataGrid_PreviewMouseDown"
+                PreviewKeyDown="brouwerDataGrid_PreviewKeyDown"
 				SelectionChanged="brouwerDataGrid_SelectionChanged"
 				ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
                 <DataGrid.RowValidationRules>
@@ -117,7 +177,12 @@
                     <DataGridTextColumn x:Name="adresColumn" Header="Adres" Binding="{Binding Adres, UpdateSourceTrigger=PropertyChanged}"/>
                     <DataGridTextColumn x:Name="postcodeColumn" Header="Postcode" Binding="{Binding Postcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                     <DataGridTextColumn x:Name="gemeenteColumn" Header="Gemeente" Binding="{Binding Gemeente, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet, UpdateSourceTrigger=PropertyChanged}"/>
+                    <!--<DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet,
+                            UpdateSourceTrigger=PropertyChanged,TargetNullValue={x:Static sys:String.Empty}, 
+                            ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}, StringFormat=c}"/>-->
+                    <DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet,
+                            UpdateSourceTrigger=PropertyChanged,TargetNullValue={x:Static sys:String.Empty}, 
+                             StringFormat=c}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
