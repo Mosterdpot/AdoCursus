@@ -72,6 +72,9 @@
     <Compile Include="Overschrijven.xaml.cs">
       <DependentUpon>Overschrijven.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RekeningInfoRaadplegen.xaml.cs">
+      <DependentUpon>RekeningInfoRaadplegen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaldoRekeningRaadplegen.xaml.cs">
       <DependentUpon>SaldoRekeningRaadplegen.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Overschrijven.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RekeningInfoRaadplegen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
