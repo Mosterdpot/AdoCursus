@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AdoGeleebschap")]
+[assembly: AssemblyTitle("AdoGereedschap")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VDAB")]
-[assembly: AssemblyProduct("AdoGeleebschap")]
+[assembly: AssemblyProduct("AdoGereedschap")]
 [assembly: AssemblyCopyright("Copyright © VDAB 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
