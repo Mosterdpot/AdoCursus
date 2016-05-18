@@ -31,6 +31,18 @@ namespace AdoWPF
             System.Windows.Data.CollectionViewSource brouwerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("brouwerViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // brouwerViewSource.Source = [generic data source]
+            var manager = new BrouwerManager(); 
+            brouwerViewSource.Source = manager.GetBrouwersBeginNaam(textBoxZoeken.Text);
+
         }
+
+        private void buttonZoeken_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionViewSource brouwerViewSource = ((CollectionViewSource)(this.FindResource("brouwerViewSource")));
+            var manager = new BrouwerManager();
+            brouwerViewSource.Source = manager.GetBrouwersBeginNaam(textBoxZoeken.Text);
+        }
+
+
     }
 }

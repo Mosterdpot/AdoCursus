@@ -1,0 +1,36 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:AdoGereedschap="clr-namespace:AdoGereedschap;assembly=AdoGereedschap"
+    mc:Ignorable="d" x:Class="AdoWPF.OverzichtBrouwers"
+    Title="OverzichtBrouwers2" SizeToContent="Width" Loaded="Window_Loaded">    
+    <Window.Resources>
+        <CollectionViewSource x:Key="brouwerViewSource" d:DesignSource="{d:DesignInstance {x:Type AdoGereedschap:Brouwer}, CreateList=True}"/>        
+    </Window.Resources>
+    <DockPanel LastChildFill="True" FocusManager.FocusedElement="{Binding ElementName=textBoxZoeken}">
+        <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+            <StackPanel HorizontalAlignment="Center" Margin="0" Width="410" Orientation="Horizontal">
+                <TextBox HorizontalAlignment="Left" Name="textBoxZoeken" Width="120" AcceptsReturn="False" />
+                <Button Content="Zoeken" HorizontalAlignment="Left" Name="buttonZoeken" Width="Auto"
+                    Background="BlanchedAlmond" FontWeight="Bold" Click="buttonZoeken_Click"
+                        IsDefault="True"/>
+            </StackPanel>
+        </Border>
+        <Border DataContext="{StaticResource brouwerViewSource}" Background="SkyBlue"
+                BorderBrush="Black" BorderThickness="1">
+            <DataGrid x:Name="brouwerDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"
+                      ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="brouwerNrColumn" Header="Brouwernr" IsReadOnly="True" Binding="{Binding BrouwerNr}"/>
+                    <DataGridTextColumn x:Name="brNaamColumn" Header="Naam" Binding="{Binding BrNaam}"/>
+                    <DataGridTextColumn x:Name="adresColumn" Header="Adres" Binding="{Binding Adres}"/>
+                    <DataGridTextColumn x:Name="postcodeColumn" Header="Postcode" Binding="{Binding Postcode}"/>
+                    <DataGridTextColumn x:Name="gemeenteColumn" Header="Gemeente" Binding="{Binding Gemeente}"/>
+                    <DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </DockPanel>
+</Window>
