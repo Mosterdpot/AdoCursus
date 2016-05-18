@@ -29,7 +29,9 @@
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <StackPanel HorizontalAlignment="Center" Margin="0" Width="410" Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Center" Margin="0" Width="600" Orientation="Horizontal">
+                <Label Content="Postcode filter:" Width="100"></Label>
+                <ComboBox Name="comboBoxPostCode" Width="100" SelectionChanged="comboBoxPostCode_SelectionChanged"></ComboBox>
                 <Button Content="|&lt;&lt;" x:Name="goToFirstButton"
 					Width="Auto"
 					FontWeight="Bold" Background="BlanchedAlmond"
@@ -53,8 +55,7 @@
                 <Button Content="Zoeken" HorizontalAlignment="Left" x:Name="buttonZoeken" Width="Auto"
 					Background="BlanchedAlmond" FontWeight="Bold" Click="buttonZoeken_Click"
 					IsDefault="True"/>
-                <Label Content="Postcode filter:"></Label>
-                <ComboBox Name="comboBoxPostCode"></ComboBox>
+                
             </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >

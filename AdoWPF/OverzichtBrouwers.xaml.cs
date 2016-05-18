@@ -33,9 +33,18 @@ namespace AdoWPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             VulDeGrid();
-            System.Windows.Data.CollectionViewSource brouwerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("brouwerViewSource1")));
+            //System.Windows.Data.CollectionViewSource brouwerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("brouwerViewSource1")));
             // Load data by setting the CollectionViewSource.Source property:
             // brouwerViewSource1.Source = [generic data source]
+
+            var manager = new BrouwerManager();
+            comboBoxPostCode.Items.Add("alles");
+            List<string> pc = manager.GetPostCodes();
+            foreach (var p in pc)
+            {
+                comboBoxPostCode.Items.Add(p);
+            }
+            comboBoxPostCode.SelectedIndex = 0;
         }
 
         private void buttonZoeken_Click(object sender, RoutedEventArgs e)
@@ -161,6 +170,21 @@ namespace AdoWPF
                 }
             }
             return foutGevonden;
+        }
+
+        private void comboBoxPostCode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxPostCode.SelectedIndex == 0)
+                brouwerDataGrid.Items.Filter = null;
+            else
+                brouwerDataGrid.Items.Filter = new Predicate<object>(PostCodeFilter);
+        }
+
+        public bool PostCodeFilter(object br)
+        {
+            Brouwer b = br as Brouwer;
+            bool result = (b.Postcode == Convert.ToInt16(comboBoxPostCode.SelectedValue));
+            return result;
         }
     }
 }
