@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="KlantToevoegen.xaml.cs">
+      <DependentUpon>KlantToevoegen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Overschrijven.xaml.cs">
       <DependentUpon>Overschrijven.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,10 @@
     <Compile Include="SaldoRekeningRaadplegen.xaml.cs">
       <DependentUpon>SaldoRekeningRaadplegen.xaml</DependentUpon>
     </Compile>
+    <Page Include="KlantToevoegen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
