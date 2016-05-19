@@ -55,7 +55,9 @@
                 <Button Content="Zoeken" HorizontalAlignment="Left" x:Name="buttonZoeken" Width="Auto"
 					Background="BlanchedAlmond" FontWeight="Bold" Click="buttonZoeken_Click"
 					IsDefault="True"/>
-                
+                <Button Height="28" Name="buttonSave" Width="28">
+                    <Image Source=".\Images\SaveHL.bmp"></Image>
+                </Button>
             </StackPanel>
         </Border>
         <Border Height="120" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom" >

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AdoGereedschap;
 using System.Globalization;
+using System.Collections.ObjectModel;
+
 
 namespace AdoWPF
 {
@@ -22,6 +24,7 @@ namespace AdoWPF
     public partial class OverzichtBrouwers : Window
     {
         private CollectionViewSource brouwerViewSource;
+        public ObservableCollection<Brouwer> brouwersOb = new ObservableCollection<Brouwer>();
 
         public OverzichtBrouwers()
         {
