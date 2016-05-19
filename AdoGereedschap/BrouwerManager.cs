@@ -151,5 +151,54 @@ namespace AdoGereedschap
                 } // comInsert
             } // conBieren
         }
+
+        public void SchrijfWijzigingen(List<Brouwer> brouwers)
+        {
+            var manager = new BierenDbManager();
+            using (var conBieren = manager.GetConnection())
+            {
+                using (var comUpdate = conBieren.CreateCommand())
+                {
+                    comUpdate.CommandType = CommandType.Text;
+                    comUpdate.CommandText = "update brouwers set BrNaam=@brnaam, Adres=@adres, Postcode=@postcode, Gemeente=@gemeente, Omzet=@omzet where BrouwerNr=@brouwernr";
+                    var parBrNaam = comUpdate.CreateParameter();
+                    parBrNaam.ParameterName = "@brnaam";
+                    comUpdate.Parameters.Add(parBrNaam);
+                    var parAdres = comUpdate.CreateParameter();
+                    parAdres.ParameterName = "@adres";
+                    comUpdate.Parameters.Add(parAdres);
+                    var parPostcode = comUpdate.CreateParameter();
+                    parPostcode.ParameterName = "@postcode";
+                    comUpdate.Parameters.Add(parPostcode);
+                    var parGemeente = comUpdate.CreateParameter();
+                    parGemeente.ParameterName = "@gemeente";
+                    comUpdate.Parameters.Add(parGemeente);
+                    var parOmzet = comUpdate.CreateParameter();
+                    parOmzet.ParameterName = "@omzet";
+                    comUpdate.Parameters.Add(parOmzet);
+                    var parBrouwerNr = comUpdate.CreateParameter();
+                    parBrouwerNr.ParameterName = "@brouwernr";
+                    comUpdate.Parameters.Add(parBrouwerNr);
+                    conBieren.Open();
+                    foreach (var eenBrouwer in brouwers)
+                    {
+                        parBrNaam.Value = eenBrouwer.BrNaam;
+                        parAdres.Value = eenBrouwer.Adres;
+                        parPostcode.Value = eenBrouwer.Postcode;
+                        parGemeente.Value = eenBrouwer.Gemeente;
+                        if (eenBrouwer.Omzet.HasValue)
+                        {
+                            parOmzet.Value = eenBrouwer.Omzet; 
+                        }
+                        else 
+                        {
+                            parOmzet.Value = DBNull.Value; 
+                        }
+                        parBrouwerNr.Value = eenBrouwer.BrouwerNr;
+                        comUpdate.ExecuteNonQuery();
+                    } // foreach
+                } // comUpdate
+            } // conBieren
+        }
     }
 }
