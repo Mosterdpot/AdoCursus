@@ -122,7 +122,7 @@
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <!--<TextBox Grid.Column="3" Grid.Row="2" Height="23"
+                    <TextBox Grid.Column="3" Grid.Row="2" Height="23"
                             HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
                             VerticalAlignment="Center" Width="120"
                             Validation.ErrorTemplate="{StaticResource validationTemplate}"
@@ -141,7 +141,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </TextBox>-->
+                    </TextBox>
                 </Grid>
             </StackPanel>
         </Border>
