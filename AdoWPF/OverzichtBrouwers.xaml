@@ -127,13 +127,10 @@
                             VerticalAlignment="Center" Width="120"
                             Validation.ErrorTemplate="{StaticResource validationTemplate}"
                             Style="{StaticResource textBoxInError}">
-                                                    <TextBox.Text>
-                                                        <Binding Path="Omzet"
-                            ValidatesOnDataErrors="True"
-                            UpdateSourceTrigger="PropertyChanged"
-                            ValidatesOnNotifyDataErrors="True"
-                            Mode="TwoWay"
-                            ConverterCulture="{x:Static glob:CultureInfo.CurrentCulture}"
+                            <TextBox.Text>
+                                <Binding Path="Omzet" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"
+                                    ValidatesOnNotifyDataErrors="True" Mode="TwoWay"
+                                    ConverterCulture="{x:Static glob:CultureInfo.CurrentCulture}"
                             StringFormat="c"
                             TargetNullValue="{x:Static sys:String.Empty}">
                                 <Binding.ValidationRules>
@@ -159,7 +156,7 @@
                 PreviewMouseDown="brouwerDataGrid_PreviewMouseDown"
                 PreviewKeyDown="brouwerDataGrid_PreviewKeyDown"
 				SelectionChanged="brouwerDataGrid_SelectionChanged"
-				ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False">
+				ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single">
                 <DataGrid.RowValidationRules>
                     <local:PostcodeRangeRule ValidationStep="UpdatedValue"/>
                 </DataGrid.RowValidationRules>
@@ -180,12 +177,12 @@
                     <DataGridTextColumn x:Name="adresColumn" Header="Adres" Binding="{Binding Adres, UpdateSourceTrigger=PropertyChanged}"/>
                     <DataGridTextColumn x:Name="postcodeColumn" Header="Postcode" Binding="{Binding Postcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
                     <DataGridTextColumn x:Name="gemeenteColumn" Header="Gemeente" Binding="{Binding Gemeente, UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--<DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet,
-                            UpdateSourceTrigger=PropertyChanged,TargetNullValue={x:Static sys:String.Empty}, 
-                            ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}, StringFormat=c}"/>-->
                     <DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet,
                             UpdateSourceTrigger=PropertyChanged,TargetNullValue={x:Static sys:String.Empty}, 
-                             StringFormat=c}"/>
+                            ConverterCulture={x:Static glob:CultureInfo.CurrentCulture}, StringFormat=c}"/>
+                    <!--<DataGridTextColumn x:Name="omzetColumn" Header="Omzet" Binding="{Binding Omzet,
+                            UpdateSourceTrigger=PropertyChanged,TargetNullValue={x:Static sys:String.Empty}, 
+                             StringFormat=c}"/>-->
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

@@ -60,11 +60,6 @@ namespace AdoWPF
 
         private void VulDeGrid()
         {
-            //brouwerViewSource = ((CollectionViewSource)(this.FindResource("brouwerViewSource")));
-            //var manager = new BrouwerManager();
-            //brouwerViewSource.Source = manager.GetBrouwersBeginNaam(textBoxZoeken.Text);
-            //goUpdate();
-
             brouwerViewSource = (CollectionViewSource)(this.FindResource("brouwerViewSource"));
             var manager = new BrouwerManager();
             int totalRowsCount;
@@ -102,6 +97,7 @@ namespace AdoWPF
             if (CheckOpFouten()) e.Handled = true;
 
             brouwerViewSource.View.MoveCurrentToLast();
+            //brouwerViewSource.View.
             goUpdate();
         }
         private void goUpdate()
@@ -119,7 +115,8 @@ namespace AdoWPF
                     brouwerDataGrid.ScrollIntoView(brouwerDataGrid.SelectedItem);
                     listBoxBrouwers.ScrollIntoView(brouwerDataGrid.SelectedItem);
                 }
-            } textBoxGo.Text = (brouwerViewSource.View.CurrentPosition + 1).ToString();
+            }
+            textBoxGo.Text = (brouwerViewSource.View.CurrentPosition + 1).ToString();
 
 
         }
