@@ -97,7 +97,7 @@ namespace AdoWPF
             if (CheckOpFouten()) e.Handled = true;
 
             brouwerViewSource.View.MoveCurrentToLast();
-            //brouwerViewSource.View.
+            
             goUpdate();
         }
         private void goUpdate()
