@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using AdoGereedschap;
 using System.Globalization;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 
 namespace AdoWPF
@@ -25,6 +26,7 @@ namespace AdoWPF
     {
         private CollectionViewSource brouwerViewSource;
         public ObservableCollection<Brouwer> brouwersOb = new ObservableCollection<Brouwer>();
+        public List<Brouwer> OudeBrouwers = new List<Brouwer>();
 
         public OverzichtBrouwers()
         {
@@ -63,12 +65,25 @@ namespace AdoWPF
             brouwerViewSource = (CollectionViewSource)(this.FindResource("brouwerViewSource"));
             var manager = new BrouwerManager();
             int totalRowsCount;
-            List<Brouwer> brouwers = new List<Brouwer>();
-            brouwers = manager.GetBrouwersBeginNaam(textBoxZoeken.Text);
-            totalRowsCount = brouwers.Count();
+            //List<Brouwer> brouwers = new List<Brouwer>();
+            //brouwers = manager.GetBrouwersBeginNaam(textBoxZoeken.Text);
+            brouwersOb = manager.GetBrouwersBeginNaam(textBoxZoeken.Text);
+            totalRowsCount = brouwersOb.Count();
             labelTotalRowCount.Content = totalRowsCount;
-            brouwerViewSource.Source = brouwers;
+            brouwerViewSource.Source = brouwersOb;
+            brouwersOb.CollectionChanged += this.OnCollectionChanged;
             goUpdate();
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (Brouwer oudeBrouwer in e.OldItems)
+                {
+                    OudeBrouwers.Add(oudeBrouwer);
+                }
+            }
         }
 
         private void goToFirstButton_Click(object sender, RoutedEventArgs e)
@@ -185,6 +200,19 @@ namespace AdoWPF
             Brouwer b = br as Brouwer;
             bool result = (b.Postcode == Convert.ToInt16(comboBoxPostCode.SelectedValue));
             return result;
+        }
+
+        private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            var manager = new BrouwerManager();
+            if (OudeBrouwers.Count() != 0)
+            {
+                manager.SchrijfVerwijderingen(OudeBrouwers);
+                labelTotalRowCount.Content =
+                (int)labelTotalRowCount.Content - OudeBrouwers.Count(); 
+            }
+            OudeBrouwers.Clear();
+            MessageBox.Show("Alles is opgeslagen in de database", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

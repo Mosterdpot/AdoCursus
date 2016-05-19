@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -34,9 +35,9 @@ namespace AdoGereedschap
             return postnummers;
         }
 
-        public List<Brouwer> GetBrouwersBeginNaam(String beginNaam)
+        public ObservableCollection<Brouwer> GetBrouwersBeginNaam(String beginNaam)
         {
-            List<Brouwer> brouwers = new List<Brouwer>();
+            ObservableCollection<Brouwer> brouwers = new ObservableCollection<Brouwer>();
             var manager = new BierenDbManager();
             using (var conBieren = manager.GetConnection())
             {
@@ -86,6 +87,28 @@ namespace AdoGereedschap
                 } // using comBrouwers
             } // using conBieren
             return brouwers;
+        }
+
+        public void SchrijfVerwijderingen(List<Brouwer> brouwers)
+        {
+            var manager = new BierenDbManager();
+            using (var conBieren = manager.GetConnection())
+            {
+                using (var comDelete = conBieren.CreateCommand())
+                {
+                    comDelete.CommandType = CommandType.Text;
+                    comDelete.CommandText = "delete from brouwers where BrouwerNr=@brouwernr";
+                    var parBrouwerNr = comDelete.CreateParameter();
+                    parBrouwerNr.ParameterName = "@brouwernr";
+                    comDelete.Parameters.Add(parBrouwerNr);
+                    conBieren.Open();
+                    foreach (Brouwer eenBrouwer in brouwers)
+                    {
+                        parBrouwerNr.Value = eenBrouwer.BrouwerNr;
+                        comDelete.ExecuteNonQuery();
+                    } // foreach
+                } // comDelete
+            } // conBieren
         }
     }
 }

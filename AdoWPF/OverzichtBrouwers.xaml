@@ -8,7 +8,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d" x:Class="AdoWPF.OverzichtBrouwers"
     xmlns:local="clr-namespace:AdoWPF"
-    Title="OverzichtBrouwers2" SizeToContent="Width" Loaded="Window_Loaded" Height="603" Width="618">
+    Title="OverzichtBrouwers2" SizeToContent="Width" Loaded="Window_Loaded" Height="603" Width="748.303">
     <Window.Resources>
         <CollectionViewSource x:Key="brouwerViewSource" d:DesignSource="{d:DesignInstance {x:Type AdoGereedschap:Brouwer}, CreateList=True}"/>
         <ControlTemplate x:Key="validationTemplate">
@@ -29,7 +29,7 @@
     </Window.Resources>
     <DockPanel LastChildFill="True">
         <Border Height="30" Background="SkyBlue" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <StackPanel HorizontalAlignment="Center" Margin="0" Width="600" Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Center" Margin="0" Width="700" Orientation="Horizontal">
                 <Label Content="Postcode filter:" Width="100"></Label>
                 <ComboBox Name="comboBoxPostCode" Width="100" SelectionChanged="comboBoxPostCode_SelectionChanged"></ComboBox>
                 <Button Content="|&lt;&lt;" x:Name="goToFirstButton"
@@ -55,7 +55,7 @@
                 <Button Content="Zoeken" HorizontalAlignment="Left" x:Name="buttonZoeken" Width="Auto"
 					Background="BlanchedAlmond" FontWeight="Bold" Click="buttonZoeken_Click"
 					IsDefault="True"/>
-                <Button Height="28" Name="buttonSave" Width="28">
+                <Button Height="28" Name="buttonSave" Width="28" Click="buttonSave_Click">
                     <Image Source=".\Images\SaveHL.bmp"></Image>
                 </Button>
             </StackPanel>
@@ -104,24 +104,6 @@
                         ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"
                              Width="120" />
                     <Label Content="Omzet:" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />                    
-                    <!--<TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
-                        VerticalAlignment="Center" Width="120"
-                        Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                        Style="{StaticResource textBoxInError}">
-                        <TextBox.Text>
-                            <Binding Path="Omzet"
-                                ValidatesOnDataErrors="True"
-                                UpdateSourceTrigger="PropertyChanged"
-                                ValidatesOnNotifyDataErrors="True"
-                                Mode="TwoWay"                                                                
-                                StringFormat="c"
-                                TargetNullValue="{x:Static sys:String.Empty}">
-                                <Binding.ValidationRules>
-                                    <local:IngevuldGroterDanNul/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>-->
                     <TextBox Grid.Column="3" Grid.Row="2" Height="23"
                             HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
                             VerticalAlignment="Center" Width="120"

@@ -14,6 +14,23 @@ namespace AdoGereedschap
         private Int16 postcodeValue;
         private String gemeenteValue;
         private Int32? omzetValue;
+
+        public Brouwer()
+        {
+
+        }
+        public Brouwer(Int32 brNr, String brNaam, String adres, Int16 postcode, String gemeente, Int32? omzet)
+        {
+            brouwersNrValue = brNr;
+            this.BrNaam = brNaam;
+            this.Adres = adres;
+            this.Postcode = postcode;
+            this.Gemeente = gemeente;
+            this.Omzet = omzet;
+        }
+
+        
+        
         public Int32 BrouwerNr
         { 
             get 
@@ -66,16 +83,6 @@ namespace AdoGereedschap
                     omzetValue = value; 
                 }
             }
-        }
-        public Brouwer(Int32 brNr, String brNaam, String adres, Int16 postcode,
-        String gemeente, Int32? omzet)
-        {
-            brouwersNrValue = brNr;
-            this.BrNaam = brNaam;
-            this.Adres = adres;
-            this.Postcode = postcode;
-            this.Gemeente = gemeente;
-            this.Omzet = omzet;
         }
     }
 }
