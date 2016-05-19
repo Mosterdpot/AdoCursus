@@ -29,10 +29,6 @@ namespace AdoGereedschap
             } // using conBank
         }
 
-        private void Test()
-        {
-            //MessageBox.Shox();
-            //komaan seg
-        }
+        
     }
 }
