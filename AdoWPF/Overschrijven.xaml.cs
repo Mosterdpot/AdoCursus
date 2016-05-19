@@ -34,7 +34,7 @@ namespace AdoWPF
                 {
                     var manager = new RekeningenManager();
                     manager.Overschrijven(bedrag, textBoxVanRekNr.Text, textBoxNaarRekNr.Text);
-                    labelStatus.Content = "OK";
+                    labelStatus.Content = "In orde";
                 }
                 catch (Exception ex)
                 {
