@@ -104,7 +104,7 @@
                         ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"
                              Width="120" />
                     <Label Content="Omzet:" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />                    
-                    <TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
+                    <!--<TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
                         VerticalAlignment="Center" Width="120"
                         Validation.ErrorTemplate="{StaticResource validationTemplate}"
                         Style="{StaticResource textBoxInError}">
@@ -121,7 +121,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </TextBox>
+                    </TextBox>-->
                     <TextBox Grid.Column="3" Grid.Row="2" Height="23"
                             HorizontalAlignment="Left" Margin="3" Name="omzetTextBox"
                             VerticalAlignment="Center" Width="120"
