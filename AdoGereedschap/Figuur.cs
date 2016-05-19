@@ -11,15 +11,23 @@ namespace AdoGereedschap
         private Int32 IDValue;
         private String naamValue;
         private System.Object versieValue;
+        public bool Changed { get; set; }
+
         public Int32 ID
         {
             get { return IDValue; }
-            set { IDValue = value; }
+            set { 
+                IDValue = value;
+                Changed = true;
+            }
         }
         public String Naam
         {
             get { return naamValue; }
-            set { naamValue = value; }
+            set {
+                naamValue = value;
+                Changed = true;
+            }
         }
         public Object Versie
         {
@@ -31,6 +39,7 @@ namespace AdoGereedschap
             this.IDValue = id;
             this.Naam = naam;
             this.Versie = versie;
+            this.Changed = false;
         }
         public Figuur() { }
     }

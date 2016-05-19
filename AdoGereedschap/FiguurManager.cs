@@ -36,5 +36,36 @@ namespace AdoGereedschap
             } // using conStrip
             return figuren;
         }
+
+        public void SchrijfWijzigingen(List<Figuur> figuren)
+        {
+            var manager = new StripDBManager();
+            using (var conStrip = manager.GetConnection())
+            {
+                using (var comUpdate = conStrip.CreateCommand())
+                {
+                    comUpdate.CommandType = CommandType.Text;
+                    comUpdate.CommandText = "update figuren set Naam=@naam where ID=@id and Versie=@versie";
+                    var parNaam = comUpdate.CreateParameter();
+                    parNaam.ParameterName = "@naam";
+                    comUpdate.Parameters.Add(parNaam);
+                    var parVersie = comUpdate.CreateParameter();
+                    parVersie.ParameterName = "@versie";
+                    comUpdate.Parameters.Add(parVersie);
+                    var parID = comUpdate.CreateParameter();
+                    parID.ParameterName = "@id";
+                    comUpdate.Parameters.Add(parID);
+                    conStrip.Open();
+                    foreach (var eenFiguur in figuren)
+                    {
+                        parNaam.Value = eenFiguur.Naam;
+                        parVersie.Value = eenFiguur.Versie;
+                        parID.Value = eenFiguur.ID;
+                        if (comUpdate.ExecuteNonQuery() == 0)
+                            throw new Exception("Iemand was je voor");
+                    }
+                }
+            }
+        }
     }
 }
