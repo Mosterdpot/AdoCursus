@@ -28,6 +28,7 @@ namespace AdoWPF
         public ObservableCollection<Brouwer> brouwersOb = new ObservableCollection<Brouwer>();
         public List<Brouwer> OudeBrouwers = new List<Brouwer>();
         public List<Brouwer> NieuweBrouwers = new List<Brouwer>();
+        public List<Brouwer> GewijzigdeBrouwers = new List<Brouwer>();
 
         public OverzichtBrouwers()
         {
@@ -222,6 +223,17 @@ namespace AdoWPF
                 (int)labelTotalRowCount.Content + NieuweBrouwers.Count();
             }
             NieuweBrouwers.Clear();
+            foreach (Brouwer b in brouwersOb)
+            {
+                if (b.Changed == true) GewijzigdeBrouwers.Add(b);
+                b.Changed = false;
+
+            }
+            if (GewijzigdeBrouwers.Count() != 0)
+            {
+                manager.SchrijfWijzigingen(GewijzigdeBrouwers);
+            }
+            GewijzigdeBrouwers.Clear();
             VulDeGrid();
         }
     }
