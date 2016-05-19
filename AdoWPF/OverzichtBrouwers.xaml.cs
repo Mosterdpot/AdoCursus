@@ -27,21 +27,16 @@ namespace AdoWPF
         private CollectionViewSource brouwerViewSource;
         public ObservableCollection<Brouwer> brouwersOb = new ObservableCollection<Brouwer>();
         public List<Brouwer> OudeBrouwers = new List<Brouwer>();
+        public List<Brouwer> NieuweBrouwers = new List<Brouwer>();
 
         public OverzichtBrouwers()
         {
             InitializeComponent();
-
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             VulDeGrid();
-            //System.Windows.Data.CollectionViewSource brouwerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("brouwerViewSource1")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // brouwerViewSource1.Source = [generic data source]
-
             var manager = new BrouwerManager();
             comboBoxPostCode.Items.Add("alles");
             List<string> pc = manager.GetPostCodes();
@@ -84,6 +79,13 @@ namespace AdoWPF
                     OudeBrouwers.Add(oudeBrouwer);
                 }
             }
+            if (e.NewItems != null)
+            {
+                foreach (Brouwer nieuweBrouwer in e.NewItems)
+                {
+                    NieuweBrouwers.Add(nieuweBrouwer);
+                }
+            }
         }
 
         private void goToFirstButton_Click(object sender, RoutedEventArgs e)
@@ -112,7 +114,7 @@ namespace AdoWPF
             if (CheckOpFouten()) e.Handled = true;
 
             brouwerViewSource.View.MoveCurrentToLast();
-            
+
             goUpdate();
         }
         private void goUpdate()
@@ -120,9 +122,9 @@ namespace AdoWPF
             goToPreviousButton.IsEnabled = !(brouwerViewSource.View.CurrentPosition == 0);
             goToFirstButton.IsEnabled = !(brouwerViewSource.View.CurrentPosition == 0);
             goToNextButton.IsEnabled =
-            !(brouwerViewSource.View.CurrentPosition == brouwerDataGrid.Items.Count - 1);
+            !(brouwerViewSource.View.CurrentPosition == brouwerDataGrid.Items.Count - 2);
             goToLastButton.IsEnabled =
-            !(brouwerViewSource.View.CurrentPosition == brouwerDataGrid.Items.Count - 1);
+            !(brouwerViewSource.View.CurrentPosition == brouwerDataGrid.Items.Count - 2);
             if (brouwerDataGrid.Items.Count != 0)
             {
                 if (brouwerDataGrid.SelectedItem != null)
@@ -204,15 +206,23 @@ namespace AdoWPF
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
+            brouwerDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             var manager = new BrouwerManager();
             if (OudeBrouwers.Count() != 0)
             {
                 manager.SchrijfVerwijderingen(OudeBrouwers);
                 labelTotalRowCount.Content =
-                (int)labelTotalRowCount.Content - OudeBrouwers.Count(); 
+                (int)labelTotalRowCount.Content - OudeBrouwers.Count();
             }
             OudeBrouwers.Clear();
-            MessageBox.Show("Alles is opgeslagen in de database", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (NieuweBrouwers.Count() != 0)
+            {
+                manager.SchrijfToevoegingen(NieuweBrouwers);
+                labelTotalRowCount.Content =
+                (int)labelTotalRowCount.Content + NieuweBrouwers.Count();
+            }
+            NieuweBrouwers.Clear();
+            VulDeGrid();
         }
     }
 }

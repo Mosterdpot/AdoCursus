@@ -14,6 +14,7 @@ namespace AdoGereedschap
         private Int16 postcodeValue;
         private String gemeenteValue;
         private Int32? omzetValue;
+        public bool Changed { get; set; }
 
         public Brouwer()
         {
@@ -27,6 +28,7 @@ namespace AdoGereedschap
             this.Postcode = postcode;
             this.Gemeente = gemeente;
             this.Omzet = omzet;
+            Changed = false;
         }
 
         
@@ -46,14 +48,18 @@ namespace AdoGereedschap
         public String Adres
         {
             get { return adresValue; }
-            set { adresValue = value; }
+            set {
+                adresValue = value;
+                Changed = true;
+            }
         }
         public Int16 Postcode
         {
             get { return postcodeValue; }
             set
             {
-                postcodeValue = value; 
+                postcodeValue = value;
+                Changed = true;
                 //if (value < 1000 || value > 9999)
                 //{
                 //    throw new Exception("Postcode moet tussen 1000 en 9999 liggen"); 
@@ -67,7 +73,11 @@ namespace AdoGereedschap
         public String Gemeente
         {
             get { return gemeenteValue; }
-            set { gemeenteValue = value; }
+            set
+            { 
+                gemeenteValue = value;
+                Changed = true;
+            }
         }
         public Int32? Omzet
         {
@@ -80,7 +90,8 @@ namespace AdoGereedschap
                 }
                 else
                 {
-                    omzetValue = value; 
+                    omzetValue = value;
+                    Changed = true;
                 }
             }
         }

@@ -110,5 +110,46 @@ namespace AdoGereedschap
                 } // comDelete
             } // conBieren
         }
+
+        public void SchrijfToevoegingen(List<Brouwer> brouwers)
+        {
+            var manager = new BierenDbManager();
+            using (var conBieren = manager.GetConnection())
+            {
+                using (var comInsert = conBieren.CreateCommand())
+                {
+                    comInsert.CommandType = CommandType.Text;
+                    comInsert.CommandText = "Insert into brouwers (BrNaam,Adres,Postcode,Gemeente,Omzet) values (@brnaam,@adres,@postcode,@gemeente,@omzet)";
+                    var parBrNaam = comInsert.CreateParameter();
+                    parBrNaam.ParameterName = "@brnaam";
+                    comInsert.Parameters.Add(parBrNaam);
+                    var parAdres = comInsert.CreateParameter();
+                    parAdres.ParameterName = "@adres";
+                    comInsert.Parameters.Add(parAdres);
+                    var parPostcode = comInsert.CreateParameter();
+                    parPostcode.ParameterName = "@postcode";
+                    comInsert.Parameters.Add(parPostcode);
+                    var parGemeente = comInsert.CreateParameter();
+                    parGemeente.ParameterName = "@gemeente";
+                    comInsert.Parameters.Add(parGemeente);
+                    var parOmzet = comInsert.CreateParameter();
+                    parOmzet.ParameterName = "@omzet";
+                    comInsert.Parameters.Add(parOmzet);
+                    conBieren.Open();
+                    foreach (Brouwer eenBrouwer in brouwers)
+                    {
+                        parBrNaam.Value = eenBrouwer.BrNaam;
+                        parAdres.Value = eenBrouwer.Adres;
+                        parPostcode.Value = eenBrouwer.Postcode;
+                        parGemeente.Value = eenBrouwer.Gemeente;
+                        if (eenBrouwer.Omzet.HasValue)
+                        { parOmzet.Value = eenBrouwer.Omzet; }
+                        else
+                        { parOmzet.Value = DBNull.Value; }
+                        comInsert.ExecuteNonQuery();
+                    } // foreach
+                } // comInsert
+            } // conBieren
+        }
     }
 }
